@@ -4,5 +4,7 @@
 <dict>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>캘린더 일정을 확인하고 추가하기 위해 캘린더 접근 권한이 필요합니다.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>캘린더 일정을 확인하고 추가하기 위해 캘린더 접근 권한이 필요합니다.</string>
 </dict>
 </plist>

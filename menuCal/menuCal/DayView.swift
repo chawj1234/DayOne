@@ -31,33 +31,6 @@ struct DayView: View {
         .buttonStyle(PlainButtonStyle())
         .frame(width: 32, height: 32)
         .contentShape(Rectangle())
-        // .contextMenu {
-            
-        //     if calendarManager.calendarAccessGranted {
-        //         if calendarManager.events.isEmpty {
-        //             Text("일정 없음")
-        //         } else {
-        //             ForEach(calendarManager.events, id: \.eventIdentifier) { event in
-        //                 Text(event.title ?? "제목 없음")
-        //             }
-        //         }
-        //         Divider()
-        //         Button("이벤트 추가") {
-        //             // 이벤트 추가 기능 제거
-        //         }
-        //     } else {
-        //         Button("캘린더 권한 요청") {
-        //             calendarManager.requestCalendarAccess {
-        //                 // fetchEvents 호출 제거
-        //             }
-        //         }
-        //     }
-        // }
-        // .onAppear {
-        //     if calendarManager.calendarAccessGranted {
-        //         // fetchEvents 호출 제거
-        //     }
-        // }
     }
     
     private var textColor: Color {

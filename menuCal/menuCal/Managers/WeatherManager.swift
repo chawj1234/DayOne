@@ -84,7 +84,7 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     // MARK: - Weather Loading
     
-    func loadWeatherForDate(_ date: Date) {
+    func loadWeatherForDate(_ date: Date) { // loadWeather 함수를 통해 해당 날짜의 날씨를 가져온다.
         selectedDate = date
         guard let location = currentLocation else {
             showLocationError()
@@ -94,6 +94,8 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     private func loadWeather(for location: CLLocation, date: Date) {
+        // 날씨 불러오는 함수인데 지역을 받아오는 로직이 함께 있다.
+        
         isLoading = true
         
         Task {
@@ -176,12 +178,14 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
             if let placemark = placemarks?.first {
+                // loclity = 도시, administrativeArea = 광역 행정구역
                 let originalLocationName = placemark.locality ??
                     placemark.administrativeArea ??
                     NSLocalizedString("Current Location", comment: "Current location text")
                 
                 let systemLanguage = Locale.current.languageCode ?? "en"
                 
+                // 지역에 맞춰서 언어 설정하기
                 if systemLanguage == "en" && self.containsKorean(originalLocationName) {
                     self.locationName = self.translateKoreanLocationToEnglish(originalLocationName)
                 } else {

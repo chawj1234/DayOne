@@ -13,6 +13,7 @@ struct CalendarView: View {
     @StateObject private var weatherManager: WeatherManager
     @StateObject private var calendarManager = CalendarManager()
     
+    // 초기화 로직을 한 곳으로 집중
     init() {
         let today = Date()
         _selectedDate = State(initialValue: today)
@@ -141,4 +142,4 @@ struct CalendarView: View {
     private func nextMonth() {
         displayDate = Calendar.current.date(byAdding: .month, value: 1, to: displayDate) ?? displayDate
     }
-} 
+}

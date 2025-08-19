@@ -94,8 +94,6 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     private func loadWeather(for location: CLLocation, date: Date) {
-        // 날씨 불러오는 함수인데 지역을 받아오는 로직이 함께 있다.
-        
         isLoading = true
         
         Task {
@@ -182,16 +180,19 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 let originalLocationName = placemark.locality ??
                     placemark.administrativeArea ??
                     NSLocalizedString("Current Location", comment: "Current location text")
-                
                 let systemLanguage = Locale.current.languageCode ?? "en"
                 
                 // 지역에 맞춰서 언어 설정하기
-                if systemLanguage == "en" && self.containsKorean(originalLocationName) {
-                    self.locationName = self.translateKoreanLocationToEnglish(originalLocationName)
-                } else {
+                if systemLanguage == "en" { // 시스템 언어 "영어"
+                    if self.containsKorean(originalLocationName) { // 지역명이 한국어인 경우
+                        self.locationName = self.translateKoreanLocationToEnglish(originalLocationName)
+                    } else { // 지역명이 한국어가 아닌 경우
+                        self.locationName = originalLocationName
+                    }
+                } else { // 시스템 언어 "영어" 아님
                     self.locationName = originalLocationName
                 }
-            } else {
+            } else { // placemarks 배열에 값이 없음
                 self.locationName = NSLocalizedString("Current Location", comment: "Current location text")
             }
         }
@@ -214,20 +215,136 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     private func translateKoreanLocationToEnglish(_ koreanLocation: String) -> String {
         let locationMap: [String: String] = [
-            "포항시": "Pohang", "포항": "Pohang",
-            "서울특별시": "Seoul", "서울시": "Seoul", "서울": "Seoul",
-            "부산광역시": "Busan", "부산시": "Busan", "부산": "Busan",
-            "대구광역시": "Daegu", "대구시": "Daegu", "대구": "Daegu",
-            "인천광역시": "Incheon", "인천시": "Incheon", "인천": "Incheon",
-            "광주광역시": "Gwangju", "광주시": "Gwangju", "광주": "Gwangju",
-            "대전광역시": "Daejeon", "대전시": "Daejeon", "대전": "Daejeon",
-            "울산광역시": "Ulsan", "울산시": "Ulsan", "울산": "Ulsan",
-            "경상북도": "Gyeongsangbuk-do",
+            "가평군": "Gapyeong", "가평": "Gapyeong",
+            "강릉시": "Gangneung", "강릉": "Gangneung",
+            "강진군": "Gangjin", "강진": "Gangjin",
+            "개천군": "Gaechon", "개천": "Gaechon",
+            "거제시": "Geoje", "거제": "Geoje",
+            "거창군": "GeoChang", "거창": "GeoChang",
+            "경산시": "Gyeongsan", "경산": "Gyeongsan",
             "경주시": "Gyeongju", "경주": "Gyeongju",
+            "계룡시": "Gyeryong", "계룡": "Gyeryong",
+            "고성군(강원)": "Goseong (Gangwon)", "고성(강원)": "Goseong (Gangwon)",
+            "고성군(경남)": "Goseong (Gyeongnam)", "고성(경남)": "Goseong (Gyeongnam)",
+            "고창군": "Gochang", "고창": "Gochang",
+            "고흥군": "Goheung", "고흥": "Goheung",
+            "공주시": "Gongju", "공주": "Gongju",
+            "과천시": "Gwacheon", "과천": "Gwacheon",
+            "광명시": "Gwangmyeong", "광명": "Gwangmyeong",
+            "광양시": "Gwangyang", "광양": "Gwangyang",
+            "광주시": "Gwangju", "광주": "Gwangju",
+            "광주광역시": "Gwangju Metropolitan City",
+            "구례군": "Gurye", "구례": "Gurye",
+            "구리시": "Guri", "구리": "Guri",
+            "군산시": "Gunsan", "군산": "Gunsan",
+            "군포시": "Gunpo", "군포": "Gunpo",
+            "군위군": "Gunwi", "군위": "Gunwi",
+            "김제시": "Gimje", "김제": "Gimje",
+            "김천시": "Gimcheon", "김천": "Gimcheon",
+            "김해시": "Gimhae", "김해": "Gimhae",
+            "남양주시": "Namyangju", "남양주": "Namyangju",
+            "남원시": "Namwon", "남원": "Namwon",
+            "남해군": "Namhae", "남해": "Namhae",
+            "논산시": "Nonsan", "논산": "Nonsan",
+            "단양군": "Danyang", "단양": "Danyang",
+            "담양군": "Damyang", "담양": "Damyang",
+            "대구광역시": "Daegu", "대구": "Daegu",
+            "대전광역시": "Daejeon", "대전": "Daejeon",
+            "동두천시": "Dongducheon", "동두천": "Dongducheon",
+            "동해시": "Donghae", "동해": "Donghae",
+            "마산시": "Masan", "마산": "Masan",
+            "목포시": "Mokpo", "목포": "Mokpo",
+            "무안군": "Muan", "무안": "Muan",
+            "무주군": "Muju", "무주": "Muju",
+            "밀양시": "Miryang", "밀양": "Miryang",
+            "보령시": "Boryeong", "보령": "Boryeong",
+            "보성군": "Boseong", "보성": "Boseong",
+            "부여군": "Buyeo", "부여": "Buyeo",
+            "부천시": "Bucheon", "부천": "Bucheon",
+            "부산광역시": "Busan",
+            "서산시": "Seosan", "서산": "Seosan",
+            "서귀포시": "Seogwipo", "서귀포": "Seogwipo",
+            "서울특별시": "Seoul", "서울": "Seoul",
+            "성남시": "Seongnam", "성남": "Seongnam",
+            "세종특별자치시": "Sejong",
+            "속초시": "Sokcho", "속초": "Sokcho",
+            "수원시": "Suwon", "수원": "Suwon",
+            "순천시": "Suncheon", "순천": "Suncheon",
+            "순창군": "Sunchang", "순창": "Sunchang",
+            "시흥시": "Siheung", "시흥": "Siheung",
+            "아산시": "Asan", "아산": "Asan",
             "안동시": "Andong", "안동": "Andong",
-            "구미시": "Gumi", "구미": "Gumi",
-            "강남구": "Gangnam-gu", "강동구": "Gangdong-gu",
-            "종로구": "Jongno-gu", "중구": "Jung-gu"
+            "안성시": "Anseong", "안성": "Anseong",
+            "안양시": "Anyang", "안양": "Anyang",
+            "양구군": "Yanggu", "양구": "Yanggu",
+            "양산시": "Yangsan", "양산": "Yangsan",
+            "양양군": "Yangyang", "양양": "Yangyang",
+            "양평군": "Yangpyeong", "양평": "Yangpyeong",
+            "양주시": "Yangju", "양주": "Yangju",
+            "여수시": "Yeosu", "여수": "Yeosu",
+            "여주시": "Yeoju", "여주": "Yeoju",
+            "연천군": "Yeoncheon", "연천": "Yeoncheon",
+            "영광군": "Yeonggwang", "영광": "Yeonggwang",
+            "영덕군": "Yeongdeok", "영덕": "Yeongdeok",
+            "영양군": "Yeongyang", "영양": "Yeongyang",
+            "영주시": "Yeongju", "영주": "Yeongju",
+            "영천시": "Yeongcheon", "영천": "Yeongcheon",
+            "영월군": "Yeongwol", "영월": "Yeongwol",
+            "예산군": "Yesan", "예산": "Yesan",
+            "예천군": "Yecheon", "예천": "Yecheon",
+            "오산시": "Osan", "오산": "Osan",
+            "용인시": "Yongin", "용인": "Yongin",
+            "울릉군": "Ulleung", "울릉": "Ulleung",
+            "울산광역시": "Ulsan", "울산시": "Ulsan",
+            "울진군": "Uljin", "울진": "Uljin",
+            "원주시": "Wonju", "원주": "Wonju",
+            "의성군": "Uiseong", "의성": "Uiseong",
+            "의왕시": "Uiwang", "의왕": "Uiwang",
+            "의정부시": "Uijeongbu", "의정부": "Uijeongbu",
+            "익산시": "Iksan", "익산": "Iksan",
+            "임실군": "Imsil", "임실": "Imsil",
+            "장성군": "Jangseong", "장성": "Jangseong",
+            "장수군": "Jangsu", "장수": "Jangsu",
+            "장흥군": "Jangheung", "장흥": "Jangheung",
+            "전주시": "Jeonju", "전주": "Jeonju",
+            "정선군": "Jeongseon", "정선": "Jeongseon",
+            "정읍시": "Jeongeup", "정읍": "Jeongeup",
+            "제천시": "Jecheon", "제천": "Jecheon",
+            "제주시": "Jeju", "제주": "Jeju",
+            "진도군": "Jindo", "진도": "Jindo",
+            "진주시": "Jinju", "진주": "Jinju",
+            "진안군": "Jinan", "진안": "Jinan",
+            "창녕군": "Changnyeong", "창녕": "Changnyeong",
+            "창원시": "Changwon", "창원": "Changwon",
+            "천안시": "Cheonan", "천안": "Cheonan",
+            "청도군": "Cheongdo", "청도": "Cheongdo",
+            "청송군": "Cheongsong", "청송": "Cheongsong",
+            "청양군": "Cheongyang", "청양": "Cheongyang",
+            "청주시": "Cheongju", "청주": "Cheongju",
+            "철원군": "Cheorwon", "철원": "Cheorwon",
+            "춘천시": "Chuncheon", "춘천": "Chuncheon",
+            "충주시": "Chungju", "충주": "Chungju",
+            "칠곡군": "Chilgok", "칠곡": "Chilgok",
+            "태백시": "Taebaek", "태백": "Taebaek",
+            "태안군": "Taean", "태안": "Taean",
+            "통영시": "Tongyeong", "통영": "Tongyeong",
+            "파주시": "Paju", "파주": "Paju",
+            "평택시": "Pyeongtaek", "평택": "Pyeongtaek",
+            "평창군": "Pyeongchang", "평창": "Pyeongchang",
+            "포천시": "Pocheon", "포천": "Pocheon",
+            "포항시": "Pohang", "포항": "Pohang",
+            "하동군": "Hadong", "하동": "Hadong",
+            "하남시": "Hanam", "하남": "Hanam",
+            "함안군": "Haman", "함안": "Haman",
+            "함평군": "Hampyeong", "함평": "Hampyeong",
+            "함양군": "Hamyang", "함양": "Hamyang",
+            "해남군": "Haenam", "해남": "Haenam",
+            "홍천군": "Hongcheon", "홍천": "Hongcheon",
+            "홍성군": "Hongseong", "홍성": "Hongseong",
+            "화성시": "Hwaseong", "화성": "Hwaseong",
+            "화순군": "Hwasun", "화순": "Hwasun",
+            "화천군": "Hwacheon", "화천": "Hwacheon",
+            "횡성군": "Hoengseong", "횡성": "Hoengseong"
         ]
         
         return locationMap[koreanLocation] ?? koreanLocation
@@ -333,4 +450,4 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             return NSLocalizedString("Unknown Weather", comment: "Weather condition: unknown")
         }
     }
-} 
+}

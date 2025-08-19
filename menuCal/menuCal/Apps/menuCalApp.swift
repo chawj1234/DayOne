@@ -14,6 +14,7 @@ struct menuCalApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
+        //메뉴바 전용 앱으로 메인 창이 없다.
         Settings {
             EmptyView()
         }
@@ -53,15 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // 팝오버 설정
         setupPopover()
-        
-        // 키보드 단축키 지원 (Cmd+Q로 종료)
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-            if event.modifierFlags.contains(.command) && event.charactersIgnoringModifiers == "q" {
-                self.quitApp()
-                return nil
-            }
-            return event
-        }
+
         
         // 첫 실행 시 온보딩 표시
         checkAndShowOnboarding()
@@ -149,6 +142,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func updatePopoverContent() {
         let contentView = ContentView()
+        //NSHostingController는 SwiftUI 뷰를 AppKit 세상 안에서 사용할 수 있도록 "포장"해주는 특수한 컨트롤러
+        //rootView: NSHostingController라는 통역사를 고용할 때, "어떤 SwiftUI 뷰를 통역(호스팅)할 것인지" 알려주는 파라미터
         popover?.contentViewController = NSHostingController(rootView: contentView)
     }
     
@@ -157,8 +152,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if let popover = popover {
             if popover.isShown {
+                //popover 닫기
                 popover.performClose(nil)
             } else {
+                //popover 열기
                 updatePopoverContent() // 팝오버를 열기 전에 컨텐츠를 새로 생성
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
             }

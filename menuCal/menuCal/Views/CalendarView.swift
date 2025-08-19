@@ -89,7 +89,7 @@ struct CalendarView: View {
             // 날씨 정보
             WeatherView(weatherManager: weatherManager)
         }
-        .frame(width: 280, height: 340)
+        .frame(width: 270, height: 320)
         .background(Color(NSColor.windowBackgroundColor))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .padding(.top, 4)

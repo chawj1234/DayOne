@@ -9,7 +9,11 @@ import SwiftUI
 import AppKit
 
 struct WeatherView: View {
+    // ":"(타입 명시)을 통해서 weatherManager라는 이름의 변수는 WeatherManager라는 타입의 객체만 담을 수 있음을 나타냄, WeatherManager 객체를 전달 받을 것을 기대함
     @ObservedObject var weatherManager: WeatherManager
+    
+    //데이터의 주인(CalendarView.swift)은 @StateObject로 단 한 번만 선언하고,
+    //그 데이터를 사용해야 하는 다른 뷰(WeatherView 등)들은 @ObservedObject로 전달받아 관찰만 합니다.
     
     var body: some View {
         VStack(spacing: 0) {
@@ -18,9 +22,6 @@ struct WeatherView: View {
             
             // 위치 정보
             HStack(spacing: 4) {
-                Image(systemName: "location.fill")
-                    .font(.system(size: 9))
-                    .foregroundColor(.secondary)
                 
                 Text(weatherManager.locationName)
                     .font(.system(size: 11, weight: .medium))
@@ -28,15 +29,6 @@ struct WeatherView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    weatherManager.requestLocation()
-                }) {
-                    Image(systemName: "arrow.clockwise")
-                        .font(.system(size: 10))
-                        .foregroundColor(.accentColor)
-                }
-                .buttonStyle(PlainButtonStyle())
-                .help("Refresh weather")
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 8)
@@ -57,33 +49,26 @@ struct WeatherView: View {
                             .frame(width: 20, height: 20)
                     }
                     
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack(spacing: 8) {
+                    HStack(spacing: 8) {
+                        if !weatherManager.temperature.isEmpty {
                             Text(weatherManager.temperature)
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(.primary)
-                            
+                        }
+                        
+                        if !weatherManager.condition.isEmpty {
                             Text(weatherManager.condition)
                                 .font(.system(size: 13))
                                 .foregroundColor(.secondary)
-                        }
-                        
-                        HStack(spacing: 3) {
-                            Image(systemName: "info.circle")
-                                .font(.system(size: 8))
-                                .foregroundColor(.secondary.opacity(0.6))
-                            
-                            Text("Weather data by Apple Weather")
-                                .font(.system(size: 9))
-                                .foregroundColor(.secondary.opacity(0.6))
                         }
                     }
                     
                     Spacer()
                 }
                 .padding(.horizontal, 16)
-                .padding(.bottom, 12)
+                .padding(.bottom, 15)
             }.buttonStyle(PlainButtonStyle())
+            .help("Weather data by Apple Weather")
         }
     }
     

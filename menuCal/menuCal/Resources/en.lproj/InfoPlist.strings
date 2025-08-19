@@ -1,3 +1,5 @@
 /* Location Permission Messages */
 "NSLocationWhenInUseUsageDescription" = "This app uses location services to provide weather information for your current location.";
 "NSLocationUsageDescription" = "This app uses location services to provide weather information for your current location."; 
+"CFBundleName" = "DayOne!";
+"CFBundleDisplayName" = "DayOne!";

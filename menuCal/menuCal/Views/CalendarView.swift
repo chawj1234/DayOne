@@ -10,15 +10,13 @@ import SwiftUI
 struct CalendarView: View {
     @State private var selectedDate: Date
     @State private var displayDate: Date
-    @StateObject private var weatherManager: WeatherManager
-    @StateObject private var calendarManager = CalendarManager()
+    @ObservedObject private var weatherManager = WeatherManager.shared
     
     // 초기화 로직을 한 곳으로 집중
     init() {
         let today = Date()
         _selectedDate = State(initialValue: today)
         _displayDate = State(initialValue: today)
-        _weatherManager = StateObject(wrappedValue: WeatherManager())
     }
     
     var body: some View {
@@ -71,8 +69,7 @@ struct CalendarView: View {
                             date: date,
                             isSelected: Calendar.current.isDate(date, inSameDayAs: selectedDate),
                             isToday: Calendar.current.isDate(date, inSameDayAs: Date()),
-                            isCurrentMonth: Calendar.current.isDate(date, equalTo: displayDate, toGranularity: .month),
-                            calendarManager: calendarManager
+                            isCurrentMonth: Calendar.current.isDate(date, equalTo: displayDate, toGranularity: .month)
                         ) {
                             selectedDate = date
                             weatherManager.loadWeatherForDate(date)
@@ -89,14 +86,8 @@ struct CalendarView: View {
             // 날씨 정보
             WeatherView(weatherManager: weatherManager)
         }
-        .frame(width: 270, height: 320)
+        .frame(width: 280, height: 320)
         .background(Color(NSColor.windowBackgroundColor))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-        .padding(.top, 4)
-        .onAppear {
-            // 앱 시작 시 캘린더 권한 요청
-            calendarManager.requestCalendarAccess()
-        }
     }
     
     // MARK: - Calendar Logic

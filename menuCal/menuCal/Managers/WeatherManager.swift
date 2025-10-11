@@ -12,6 +12,8 @@ import WeatherKit
 
 @MainActor
 class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    static let shared = WeatherManager()
+    
     @Published var temperature: String = "?"
     @Published var condition: String = NSLocalizedString("Locating...", comment: "Location loading text")
     @Published var weatherIcon: String = "location.fill"
@@ -24,10 +26,10 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var currentLocation: CLLocation?
     private var selectedDate: Date = .init()
     
-    override init() {
+    private override init() {
         super.init()
         setupLocationManager()
-        requestLocation()
+        checkAndRequestLocationIfNeeded()
     }
     
     private func setupLocationManager() {
@@ -35,20 +37,50 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
+    // 위치가 없을 때만 요청
+    private func checkAndRequestLocationIfNeeded() {
+        let status = locationManager.authorizationStatus
+        
+        switch status {
+        case .authorizedAlways:
+            // 이미 권한이 있고 위치가 없을 때만 요청
+            if currentLocation == nil {
+                isLoading = true
+                locationManager.requestLocation()
+            }
+        case .notDetermined:
+            // 처음 실행 - 권한 요청
+            isLoading = true
+            locationName = NSLocalizedString("Locating...", comment: "Location loading text")
+            locationManager.requestAlwaysAuthorization()
+            // 권한 요청 후 약간의 딜레이를 두고 다시 확인
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                if self.locationManager.authorizationStatus == .authorizedAlways {
+                    self.locationManager.requestLocation()
+                }
+            }
+        case .denied, .restricted:
+            showLocationError()
+        @unknown default:
+            showLocationError()
+        }
+    }
+    
+    // 수동으로 위치 새로고침이 필요할 때 사용
     func requestLocation() {
         isLoading = true
         locationName = NSLocalizedString("Locating...", comment: "Location loading text")
-        currentLocation = nil
         
-        // 권한 확인 후 위치 요청
-        switch locationManager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
+        let status = locationManager.authorizationStatus
+        
+        switch status {
+        case .authorizedAlways:
             locationManager.requestLocation()
         case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestAlwaysAuthorization()
         case .denied, .restricted:
             showLocationError()
-        default:
+        @unknown default:
             showLocationError()
         }
     }
@@ -71,13 +103,15 @@ class WeatherManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         DispatchQueue.main.async {
             switch status {
             case .notDetermined:
-                self.locationManager.requestWhenInUseAuthorization()
-            case .authorizedWhenInUse, .authorizedAlways:
-                self.requestLocation()
+                // 아직 결정 안 됨 - 기다림
+                break
+            case .authorizedAlways:
+                // 권한 승인됨 - 즉시 위치 요청
+                self.locationManager.requestLocation()
             case .denied, .restricted:
                 self.showLocationError()
-            default:
-                break
+            @unknown default:
+                self.showLocationError()
             }
         }
     }

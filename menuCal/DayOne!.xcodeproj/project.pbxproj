@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		79F4C1DC2F40AAE700123456 /* MenuCalLauncher.app in Embed Login Item */ = {isa = PBXBuildFile; fileRef = 79F4C1D22F40AAE700123456 /* MenuCalLauncher.app */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		79EEB0A82E09A1B400BB56D3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,13 +25,35 @@
 			remoteGlobalIDString = 79EEB0982E09A1B300BB56D3;
 			remoteInfo = menuCal;
 		};
+		79F4C1D92F40AAE700123456 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79EEB0912E09A1B300BB56D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79F4C1D12F40AAE700123456;
+			remoteInfo = MenuCalLauncher;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		79F4C1DB2F40AAE700123456 /* Embed Login Item */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				79F4C1DC2F40AAE700123456 /* MenuCalLauncher.app in Embed Login Item */,
+			);
+			name = "Embed Login Item";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		790C65D62E34A56200907AB1 /* DayOne--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DayOne--Info.plist"; sourceTree = "<group>"; };
 		79EEB0992E09A1B300BB56D3 /* DayOne!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DayOne!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79EEB0A72E09A1B400BB56D3 /* DayOne!Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DayOne!Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79EEB0B12E09A1B400BB56D3 /* DayOne!UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DayOne!UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		79F4C1D22F40AAE700123456 /* MenuCalLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuCalLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +70,11 @@
 		79EEB0B42E09A1B400BB56D3 /* menuCalUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = menuCalUITests;
+			sourceTree = "<group>";
+		};
+		79F4C1DD2F40AAE700123456 /* MenuCalLauncher */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MenuCalLauncher;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -70,6 +101,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		79F4C1D42F40AAE700123456 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -80,6 +118,7 @@
 				79EEB09B2E09A1B300BB56D3 /* menuCal */,
 				79EEB0AA2E09A1B400BB56D3 /* menuCalTests */,
 				79EEB0B42E09A1B400BB56D3 /* menuCalUITests */,
+				79F4C1DD2F40AAE700123456 /* MenuCalLauncher */,
 				79EEB09A2E09A1B300BB56D3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +129,7 @@
 				79EEB0992E09A1B300BB56D3 /* DayOne!.app */,
 				79EEB0A72E09A1B400BB56D3 /* DayOne!Tests.xctest */,
 				79EEB0B12E09A1B400BB56D3 /* DayOne!UITests.xctest */,
+				79F4C1D22F40AAE700123456 /* MenuCalLauncher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,10 +144,12 @@
 				79EEB0952E09A1B300BB56D3 /* Sources */,
 				79EEB0962E09A1B300BB56D3 /* Frameworks */,
 				79EEB0972E09A1B300BB56D3 /* Resources */,
+				79F4C1DB2F40AAE700123456 /* Embed Login Item */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				79F4C1DA2F40AAE700123456 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				79EEB09B2E09A1B300BB56D3 /* menuCal */,
@@ -165,6 +207,28 @@
 			productReference = 79EEB0B12E09A1B400BB56D3 /* DayOne!UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		79F4C1D12F40AAE700123456 /* MenuCalLauncher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79F4C1D82F40AAE700123456 /* Build configuration list for PBXNativeTarget "MenuCalLauncher" */;
+			buildPhases = (
+				79F4C1D32F40AAE700123456 /* Sources */,
+				79F4C1D42F40AAE700123456 /* Frameworks */,
+				79F4C1D52F40AAE700123456 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				79F4C1DD2F40AAE700123456 /* MenuCalLauncher */,
+			);
+			name = MenuCalLauncher;
+			packageProductDependencies = (
+			);
+			productName = MenuCalLauncher;
+			productReference = 79F4C1D22F40AAE700123456 /* MenuCalLauncher.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -173,7 +237,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					79EEB0982E09A1B300BB56D3 = {
 						CreatedOnToolsVersion = 16.4;
@@ -185,6 +249,10 @@
 					79EEB0B02E09A1B400BB56D3 = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = 79EEB0982E09A1B300BB56D3;
+					};
+					79F4C1D12F40AAE700123456 = {
+						CreatedOnToolsVersion = 16.4;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -204,6 +272,7 @@
 			projectRoot = "";
 			targets = (
 				79EEB0982E09A1B300BB56D3 /* DayOne! */,
+				79F4C1D12F40AAE700123456 /* MenuCalLauncher */,
 				79EEB0A62E09A1B400BB56D3 /* DayOne!Tests */,
 				79EEB0B02E09A1B400BB56D3 /* DayOne!UITests */,
 			);
@@ -226,6 +295,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		79EEB0AF2E09A1B400BB56D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79F4C1D52F40AAE700123456 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,6 +332,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		79F4C1D32F40AAE700123456 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -269,6 +352,11 @@
 			target = 79EEB0982E09A1B300BB56D3 /* DayOne! */;
 			targetProxy = 79EEB0B22E09A1B400BB56D3 /* PBXContainerItemProxy */;
 		};
+		79F4C1DA2F40AAE700123456 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79F4C1D12F40AAE700123456 /* MenuCalLauncher */;
+			targetProxy = 79F4C1D92F40AAE700123456 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -277,6 +365,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -306,6 +395,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = U9JJVCW82P;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -331,6 +421,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -341,6 +432,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -370,6 +462,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = U9JJVCW82P;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -388,6 +481,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -400,28 +494,30 @@
 				CODE_SIGN_ENTITLEMENTS = menuCal/menuCal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = U9JJVCW82P;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
 				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
 				ENABLE_RESOURCE_ACCESS_CALENDARS = YES;
 				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
 				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = YES;
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "DayOne--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "DayOne!";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "메뉴바에서 실시간 날씨 정보를 표시하기 위해 위치 서비스를 사용합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "메뉴바에서 실시간 날씨 정보를 표시하기 위해 위치 서비스를 사용합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "날씨 정보를 가져오기 위해 위치 정보 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "날씨 정보를 가져오기 위해 위치 정보 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "현재 위치의 날씨 정보를 제공하기 위해 위치 서비스를 사용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치의 날씨 정보를 제공하기 위해 위치 서비스를 사용합니다.";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -429,7 +525,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Wonjun.menuCal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -446,28 +542,30 @@
 				CODE_SIGN_ENTITLEMENTS = menuCal/menuCal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = U9JJVCW82P;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
 				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
 				ENABLE_RESOURCE_ACCESS_CALENDARS = YES;
 				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
 				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = YES;
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "DayOne--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "DayOne!";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "메뉴바에서 실시간 날씨 정보를 표시하기 위해 위치 서비스를 사용합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "메뉴바에서 실시간 날씨 정보를 표시하기 위해 위치 서비스를 사용합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "날씨 정보를 가져오기 위해 위치 정보 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "날씨 정보를 가져오기 위해 위치 정보 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "현재 위치의 날씨 정보를 제공하기 위해 위치 서비스를 사용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치의 날씨 정보를 제공하기 위해 위치 서비스를 사용합니다.";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -475,7 +573,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Wonjun.menuCal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -490,6 +588,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = U9JJVCW82P;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -508,6 +607,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = U9JJVCW82P;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -525,6 +625,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = U9JJVCW82P;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -541,6 +642,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = U9JJVCW82P;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -549,6 +651,68 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = menuCal;
+			};
+			name = Release;
+		};
+		79F4C1D62F40AAE700123456 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MenuCalLauncher/MenuCalLauncher.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = U9JJVCW82P;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "DayOne! Helper";
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Wonjun.menuCal.launcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		79F4C1D72F40AAE700123456 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MenuCalLauncher/MenuCalLauncher.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = U9JJVCW82P;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "DayOne! Helper";
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Wonjun.menuCal.launcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -587,6 +751,15 @@
 			buildConfigurations = (
 				79EEB0C22E09A1B400BB56D3 /* Debug */,
 				79EEB0C32E09A1B400BB56D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79F4C1D82F40AAE700123456 /* Build configuration list for PBXNativeTarget "MenuCalLauncher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79F4C1D62F40AAE700123456 /* Debug */,
+				79F4C1D72F40AAE700123456 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -2,15 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleName</key>
-	<string>DayOne!</string>
-	<key>CFBundleDisplayName</key>
-	<string>DayOne!</string>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>캘린더 일정을 확인하고 추가하기 위해 캘린더 접근 권한이 필요합니다.</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>캘린더 일정을 확인하고 추가하기 위해 캘린더 접근 권한이 필요합니다.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>DayOne! uses your location to provide accurate local weather information in the menu bar.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>날씨 정보를 가져오기 위해 위치 정보 접근 권한이 필요합니다.</string>
+	<string>DayOne! uses your location to provide accurate local weather information in the menu bar.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>DayOne! uses your location to provide accurate local weather information in the menu bar.</string>
 </dict>
 </plist>

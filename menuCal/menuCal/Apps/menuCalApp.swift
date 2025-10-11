@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AppKit
-// import ServiceManagement  // 자동 실행 기능을 위해 필요한 경우 주석 해제
+import ServiceManagement
 
 @main
 struct menuCalApp: App {
@@ -21,18 +21,21 @@ struct menuCalApp: App {
     }
 }
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusItem: NSStatusItem?
-    var popover: NSPopover?
     var statusBarMenu: NSMenu?
     var systemSettingsGuideWindow: NSWindow?
+    var mainMenu: NSMenu?
+    
+    private let launchAtLoginKey = "launchAtLoginEnabled"
+    private let loginItemIdentifier = "com.Wonjun.menuCal.launcher"
+    private var launchAtLoginMenuItem: NSMenuItem?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 독 아이콘 숨기기
         NSApp.setActivationPolicy(.accessory)
         
-        // 로그인 시 자동 시작 설정 (필요한 경우 주석 해제)
-        // enableLoginItem()
+        configureLaunchAtLoginOnStartup()
         
         // 상태바 아이템 생성
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -46,14 +49,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // 상태바 메뉴 설정
         setupStatusBarMenu()
-        
         // 1분마다 날짜 업데이트
         Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
             self.updateDateDisplay()
         }
-        
-        // 팝오버 설정
-        setupPopover()
 
         
         // 첫 실행 시 온보딩 표시
@@ -69,8 +68,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem?.button?.performClick(nil)
             statusItem?.menu = nil
         } else {
-            // 좌클릭 - 팝오버 토글
-            togglePopover()
+            // 좌클릭 - 메인 메뉴 열기
+            presentMainMenu()
         }
     }
     
@@ -84,6 +83,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         aboutMenuItem.target = self
         statusBarMenu?.addItem(aboutMenuItem)
         
+        let launchAtLoginTitle = NSLocalizedString("Launch at Login", comment: "Launch at login menu item")
+        let launchAtLoginItem = NSMenuItem(title: launchAtLoginTitle,
+                                           action: #selector(toggleLaunchAtLogin(_:)),
+                                           keyEquivalent: "")
+        launchAtLoginItem.target = self
+        launchAtLoginMenuItem = launchAtLoginItem
+        updateLaunchAtLoginMenuItemState()
+        statusBarMenu?.addItem(launchAtLoginItem)
+        
         // 구분선
         statusBarMenu?.addItem(NSMenuItem.separator())
         
@@ -93,6 +101,46 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                       keyEquivalent: "q")
         quitMenuItem.target = self
         statusBarMenu?.addItem(quitMenuItem)
+    }
+    
+    private func configureLaunchAtLoginOnStartup() {
+        let defaults = UserDefaults.standard
+        let storedPreference = defaults.object(forKey: launchAtLoginKey) as? Bool
+        let desiredState = storedPreference ?? true
+        applyLaunchAtLoginPreference(desiredState)
+    }
+    
+    private func applyLaunchAtLoginPreference(_ enabled: Bool) {
+        let loginItemService = SMAppService.loginItem(identifier: loginItemIdentifier)
+        let currentState = loginItemService.status == .enabled
+        
+        do {
+            if enabled, !currentState {
+                try loginItemService.register()
+            } else if !enabled, currentState {
+                try loginItemService.unregister()
+            }
+            UserDefaults.standard.set(enabled, forKey: launchAtLoginKey)
+            updateLaunchAtLoginMenuItemState(enabled: enabled)
+        } catch {
+            NSLog("로그인 아이템 업데이트 실패: \(error)")
+            updateLaunchAtLoginMenuItemState()
+        }
+    }
+    
+    private func currentLaunchAtLoginState() -> Bool {
+        SMAppService.loginItem(identifier: loginItemIdentifier).status == .enabled
+    }
+    
+    private func updateLaunchAtLoginMenuItemState(enabled: Bool? = nil) {
+        guard let menuItem = launchAtLoginMenuItem else { return }
+        let isEnabled = enabled ?? currentLaunchAtLoginState()
+        menuItem.state = isEnabled ? .on : .off
+    }
+    
+    @objc private func toggleLaunchAtLogin(_ sender: NSMenuItem) {
+        let nextState = !currentLaunchAtLoginState()
+        applyLaunchAtLoginPreference(nextState)
     }
     
     @objc func showAbout() {
@@ -133,32 +181,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    private func setupPopover() {
-        popover = NSPopover()
-        popover?.contentSize = NSSize(width: 280, height: 340)
-        popover?.behavior = .transient
-        updatePopoverContent()
+    private func presentMainMenu() {
+        guard let statusItem = statusItem, let button = statusItem.button else { return }
+        let menu = buildMainMenu()
+        mainMenu = menu
+        statusItem.menu = menu
+        button.performClick(nil)
+        statusItem.menu = nil
     }
     
-    private func updatePopoverContent() {
-        let contentView = ContentView()
-        //NSHostingController는 SwiftUI 뷰를 AppKit 세상 안에서 사용할 수 있도록 "포장"해주는 특수한 컨트롤러
-        //rootView: NSHostingController라는 통역사를 고용할 때, "어떤 SwiftUI 뷰를 통역(호스팅)할 것인지" 알려주는 파라미터
-        popover?.contentViewController = NSHostingController(rootView: contentView)
-    }
-    
-    @objc func togglePopover() {
-        guard let button = statusItem?.button else { return }
+    private func buildMainMenu() -> NSMenu {
+        let menu = NSMenu()
+        menu.autoenablesItems = false
+        menu.delegate = self
         
-        if let popover = popover {
-            if popover.isShown {
-                //popover 닫기
-                popover.performClose(nil)
-            } else {
-                //popover 열기
-                updatePopoverContent() // 팝오버를 열기 전에 컨텐츠를 새로 생성
-                popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-            }
+        let contentItem = NSMenuItem()
+        let hostingView = NSHostingView(rootView: CalendarView())
+        hostingView.frame = NSRect(x: 0, y: 0, width: 280, height: 320)
+        contentItem.view = hostingView
+        menu.addItem(contentItem)
+        return menu
+    }
+    
+    func menuDidClose(_ menu: NSMenu) {
+        if menu == mainMenu {
+            mainMenu = nil
         }
     }
     

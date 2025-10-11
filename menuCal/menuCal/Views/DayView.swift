@@ -6,14 +6,12 @@
 //
 
 import SwiftUI
-import EventKit
 
 struct DayView: View {
     let date: Date
     let isSelected: Bool
     let isToday: Bool
     let isCurrentMonth: Bool
-    @ObservedObject var calendarManager: CalendarManager
     let action: () -> Void
     
     var body: some View {
